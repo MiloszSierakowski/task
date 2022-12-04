@@ -35,4 +35,14 @@ public class TaskController {
 
     }
 
+    @GetMapping(value = "wiadomosc/{number}")
+    public String getWelcomeMessage(@PathVariable int number){
+        return "No to prosze bardzo wiadomosc";
+    }
+
+    @PutMapping(value = "wiadomosc/argument/{number}")
+    public String updateMessage(@PathVariable int number){
+        return "zobaczymy numerek podany jako argument " + number;
+    }
+
 }
