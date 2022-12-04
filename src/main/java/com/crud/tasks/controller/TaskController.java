@@ -10,30 +10,27 @@ import java.util.List;
 @RequestMapping("/v1/tasks")
 public class TaskController {
 
-//    private TaskMapper taskMapper;
-//    private DbService dbService;
-
-    @GetMapping(value = "/getTasks")
+    @GetMapping
     public List<TaskDto> getTasks() {
         return new ArrayList<>();
     }
 
-    @GetMapping(value = "/getTask")
-    public TaskDto getTask(Long taskId) {
+    @GetMapping(value = "{taskId}")
+    public TaskDto getTask(@PathVariable Long taskId) {
         return new TaskDto(1L, "test title", "test_content");
     }
 
-    @DeleteMapping(value = "/deleteTask")
+    @DeleteMapping
     public void deleteTask(Long taskId) {
 
     }
 
-    @PutMapping(value = "/updateTask")
+    @PutMapping
     public TaskDto updateTask(TaskDto taskDto) {
         return new TaskDto(1L, "test title", "test_content");
     }
 
-    @PostMapping(value = "/createTask")
+    @PostMapping
     public void createTask(TaskDto taskDto) {
 
     }
