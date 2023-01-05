@@ -15,6 +15,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/v1/tasks")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class TaskController {
     private final DbService service;
     private final TaskMapper taskMapper;
@@ -25,13 +26,13 @@ public class TaskController {
         return ResponseEntity.ok(taskMapper.mapToTaskDtoList(tasks));
     }
 
-    @GetMapping(value = "{taskId}")
+    @GetMapping(value = "kodilla/{taskId}")
     public TaskDto getTask(@PathVariable Long taskId) {
         Optional<Task> searchedTask = service.findTaskById(taskId);
         return searchedTask.map(taskMapper::mapToTaskDto).orElse(null);
     }
 
-    @GetMapping(value = "kodilla/{taskId}")
+    @GetMapping(value = "{taskId}")
     public ResponseEntity<TaskDto> getTaskKodilla(@PathVariable Long taskId) throws TaskNotFoundException {
         return ResponseEntity.ok(taskMapper.mapToTaskDto(service.getTask(taskId)));
     }
@@ -54,6 +55,16 @@ public class TaskController {
         Task task = taskMapper.mapToTask(taskDto);
         service.saveTask(task);
         return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping(value = "pierwszenstwo/{number}")
+    public String checkNumber(@PathVariable int number) {
+        if (number > 4 && (number % 2 == 0 || number % 3 == 0)) {
+            return "To nie liczba pierwsza";
+        } else {
+            return "To liczba pierwsza";
+        }
     }
 
     @GetMapping(value = "wiadomosc/{number}")
