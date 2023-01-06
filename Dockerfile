@@ -19,6 +19,3 @@ RUN echo ${MYSQL_DB_URL}
 RUN ./gradlew build -PMYSQL_DB_URL="jdbc:${MYSQL_DB_URL}"
 
 ENTRYPOINT ["java","-jar","/usr/src/app/build/libs/tasks-0.0.1-SNAPSHOT.jar"]
-# TODO zobaczyć co to jest git ignore
-
-# TODO Ostatnia linijka odpowiada za budowanie aplikacji. Jeśli w Twoim folderze /build/libs aplikacja nosi inną nazwę, to podmień wartość tasks-0.0.1-SNAPSHOT.jar na znajdującą się tam nazwę pliku jar.
