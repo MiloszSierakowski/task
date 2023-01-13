@@ -3,7 +3,9 @@ package com.crud.tasks;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 @OpenAPIDefinition
 public class TasksApplication {
@@ -11,8 +13,4 @@ public class TasksApplication {
         SpringApplication.run(TasksApplication.class, args);
     }
 
-/*    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(TasksApplication.class);
-    }*/
 }
