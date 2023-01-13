@@ -33,11 +33,16 @@ dependencies {
 	//providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
-tasks.named('test') {
-	onlyIf {
-		project.hasProperty("runtests")
-	}
-	doLast {
+//tasks.named('test') {
+//	onlyIf {
+//		project.hasProperty("runtests")
+//	}
+//	doLast {
+//		useJUnitPlatform()
+//	}
+//}
+
+
+tasks.named('test'){
 		useJUnitPlatform()
-	}
 }
