@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class TrelloConfig {
-    @Value("${trello.api.endpoint.prod}")
+    @Value("${trello.api.endpoint.prod:default}")
     private String trelloApiEndpoint;
     @Value("${trello.app.key}")
     private String trelloAppKey;
