@@ -11,12 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class EmailScheduler {
-
     private final SimpleEmailService simpleEmailService;
     private final TaskRepository taskRepository;
     private final AdminConfig adminConfig;
     private static final String SUBJECT = "Tasks: Once a day email";
-
 
     @Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
