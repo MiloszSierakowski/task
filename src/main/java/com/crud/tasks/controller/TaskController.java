@@ -57,7 +57,6 @@ public class TaskController {
         return ResponseEntity.ok().build();
     }
 
-
     @GetMapping(value = "pierwszenstwo/{number}")
     public String checkNumber(@PathVariable int number) {
         if (number > 4 && (number % 2 == 0 || number % 3 == 0)) {

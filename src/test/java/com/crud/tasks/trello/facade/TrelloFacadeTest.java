@@ -1,9 +1,9 @@
 package com.crud.tasks.trello.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
+import com.crud.tasks.domain.additional.clas.AttachmentsByType;
+import com.crud.tasks.domain.additional.clas.Badges;
+import com.crud.tasks.domain.additional.clas.Trello;
 import com.crud.tasks.mapper.TrelloMapper;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.validator.TrelloValidator;
@@ -24,15 +24,13 @@ class TrelloFacadeTest {
 
     @InjectMocks
     private TrelloFacade trelloFacade;
-
     @Mock
     private TrelloService trelloService;
-
     @Mock
     private TrelloValidator trelloValidator;
-
     @Mock
     private TrelloMapper trelloMapper;
+
 
     @Test
     void shouldFetchEmptyList() {
@@ -98,5 +96,40 @@ class TrelloFacadeTest {
             });
         });
 
+    }
+
+    @Test
+    void createCardTest() {
+
+        TrelloCard trelloCard = new TrelloCard(
+                "test task",
+                "Test Description",
+                "top",
+                "test_id"
+        );
+
+        TrelloCardDto trelloCardDto = new TrelloCardDto(
+                "test task",
+                "Test Description",
+                "top",
+                "test_id"
+        );
+
+        CreatedTrelloCardDto createdTrelloCardDto = new CreatedTrelloCardDto(
+                "1",
+                "test task",
+                "http://test.com",
+                new Badges(0, new AttachmentsByType(new Trello(0, 0)))
+        );
+
+        when(trelloMapper.mapToCard(trelloCardDto)).thenReturn(trelloCard);
+        when(trelloMapper.mapToCardDto(trelloCard)).thenReturn(trelloCardDto);
+        when(trelloService.createTrelloCard(trelloCardDto)).thenReturn(createdTrelloCardDto);
+
+        CreatedTrelloCardDto newCard = trelloFacade.createCard(trelloCardDto);
+
+        assertEquals("1", newCard.getId());
+        assertEquals("test task", newCard.getName());
+        assertEquals("http://test.com", newCard.getShortUrl());
     }
 }
