@@ -33,19 +33,23 @@ class DbServiceTest {
 
         List<Task> allTasks = dbService.getAllTasks();
 
-        assertAll(
-                () -> assertEquals(savedTask.size(), allTasks.size()),
-                () -> assertEquals(savedTask.get(0).getTitle(), allTasks.get(0).getTitle()),
-                () -> assertEquals(savedTask.get(1).getTitle(), allTasks.get(1).getTitle()),
-                () -> assertEquals(savedTask.get(2).getTitle(), allTasks.get(2).getTitle()),
-                () -> assertEquals(savedTask.get(0).getContent(), allTasks.get(0).getContent()),
-                () -> assertEquals(savedTask.get(1).getContent(), allTasks.get(1).getContent()),
-                () -> assertEquals(savedTask.get(2).getContent(), allTasks.get(2).getContent())
-        );
+        try {
+            assertAll(
+                    () -> assertEquals(savedTask.size(), allTasks.size()),
+                    () -> assertEquals(savedTask.get(0).getTitle(), allTasks.get(0).getTitle()),
+                    () -> assertEquals(savedTask.get(1).getTitle(), allTasks.get(1).getTitle()),
+                    () -> assertEquals(savedTask.get(2).getTitle(), allTasks.get(2).getTitle()),
+                    () -> assertEquals(savedTask.get(0).getContent(), allTasks.get(0).getContent()),
+                    () -> assertEquals(savedTask.get(1).getContent(), allTasks.get(1).getContent()),
+                    () -> assertEquals(savedTask.get(2).getContent(), allTasks.get(2).getContent())
+            );
+        } finally {
+            allTasks.forEach(
+                    task -> dbService.deleteTaskById(task.getId())
+            );
+        }
 
-        allTasks.forEach(
-                task -> dbService.deleteTaskById(task.getId())
-        );
+
     }
 
     @Test
