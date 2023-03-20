@@ -19,7 +19,7 @@ public class EmailScheduler {
     @Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        simpleEmailService.sendSecondEmail(
+        simpleEmailService.send(
                 Mail.builder()
                         .mailTo(adminConfig.getAdminMail())
                         .subject(SUBJECT)
@@ -32,7 +32,7 @@ public class EmailScheduler {
     @Scheduled(fixedRate = 120000)
     public void sendSecondEmail() {
         long size = taskRepository.count();
-        simpleEmailService.send(
+        simpleEmailService.sendSecondEmail(
                 Mail.builder()
                         .mailTo(adminConfig.getAdminMail())
                         .subject(SUBJECT)
