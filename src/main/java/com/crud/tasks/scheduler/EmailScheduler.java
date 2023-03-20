@@ -28,8 +28,8 @@ public class EmailScheduler {
         );
     }
 
-//    @Scheduled(cron = "0 0 9 * * *")
-    @Scheduled(fixedRate = 120000)
+    @Scheduled(cron = "0 0 9 * * *")
+//    @Scheduled(fixedRate = 120000)
     public void sendSecondEmail() {
         long size = taskRepository.count();
         simpleEmailService.sendSecondEmail(
