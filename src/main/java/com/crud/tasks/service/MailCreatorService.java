@@ -71,7 +71,7 @@ public class MailCreatorService {
         context.setVariable("company_email", "Email " + companyConfig.getCompanyEmail());
         context.setVariable("company_phone", "Numer Telefonu " + companyConfig.getCompanyPhone());
         context.setVariable("application_functionality", functionality);
-        return templateEngine.process("mail/created-second-trello-card-mail", context);
+        return templateEngine.process("mail2/created-second-trello-card-mail", context);
     }
 
 
