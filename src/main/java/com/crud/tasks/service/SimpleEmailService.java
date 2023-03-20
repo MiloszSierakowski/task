@@ -10,6 +10,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.Optional;
 
 @Slf4j
@@ -29,6 +31,16 @@ public class SimpleEmailService {
         }
     }
 
+    public void sendSecondEmail(final Mail mail) {
+        try {
+            log.info("Email in preparation to send");
+            javaMailSender.send(createMimeMessageForSecondMail(mail));
+            log.info("Email has been sent.");
+        } catch (MailException e) {
+            log.error("Failed to process email sending: " + e.getMessage(), e);
+        }
+    }
+
     public void sendNormalMail(final Mail mail) {
         try {
             log.info("Starting email preparation...");
@@ -40,12 +52,24 @@ public class SimpleEmailService {
         }
     }
 
+    private MimeMessageHelper prepareMimeMessageHelper(MimeMessage mimeMessage, Mail mail) throws MessagingException {
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+        messageHelper.setTo(mail.getMailTo());
+        messageHelper.setSubject(mail.getSubject());
+        return messageHelper;
+    }
+
     private MimeMessagePreparator createMimeMessage(final Mail mail) {
         return mimeMessage -> {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setTo(mail.getMailTo());
-            messageHelper.setSubject(mail.getSubject());
+            MimeMessageHelper messageHelper = prepareMimeMessageHelper(mimeMessage, mail);
             messageHelper.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()), true);
+        };
+    }
+
+    private MimeMessagePreparator createMimeMessageForSecondMail(final Mail mail) {
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = prepareMimeMessageHelper(mimeMessage, mail);
+            messageHelper.setText(mailCreatorService.buildSecondTrelloCardEmail(mail.getMessage()), true);
         };
     }
 
